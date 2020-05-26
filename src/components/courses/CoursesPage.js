@@ -53,10 +53,8 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-    actions: bindActionCreators(courseActions, dispatch)
-  }
+const mapDispatchToProps = {
+  createCourse: courseActions.createCourse
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
