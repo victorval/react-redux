@@ -6,15 +6,18 @@ export function createCourse(course) {
 }
 
 export function loadCoursesSuccess(courses) {
-  return { type: types.LOAD_COURSES_SUCCESS, courses}
+  return { type: types.LOAD_COURSES_SUCCESS, courses };
 }
 
-export function loadCourses(){
-  return function(dispatch){
-    return courseApi.getCourses().then(courses => {
-      dispatch(loadCoursesSuccess(courses))
-    }).catch(err => {
-      throw err;
-    })
-  }
+export function loadCourses() {
+  return function (dispatch) {
+    return courseApi
+      .getCourses()
+      .then((courses) => {
+        dispatch(loadCoursesSuccess(courses));
+      })
+      .catch((err) => {
+        throw err;
+      });
+  };
 }
