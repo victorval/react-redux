@@ -1,8 +1,8 @@
 // SECTION 1 Imports for container component
 import React from "react";
 import { connect } from "react-redux";
-import * as courseActions from "../../redux/actions/courseActions";
-import * as authorActions from "../../redux/actions/authorActions";
+import { loadCourses } from "../../redux/actions/courseActions";
+import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 
 // SECTION 2 Component declaration, pre-on-load and render
@@ -50,8 +50,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   //this will bound call automatically for dispatch in component
-  loadCourses: courseActions.loadCourses,
-  loadAuthors: authorActions.loadAuthors,
+  loadCourses,
+  loadAuthors,
 };
 
 // SECTION 5 connect
