@@ -1,14 +1,13 @@
 // SECTION 1 Imports for container component
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { loadCourses } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 
 // SECTION 2 Component declaration, pre-on-load and render
-class ManageCoursesPage extends React.Component {
-  componentDidMount() {
-    const { courses, authors, loadAuthors, loadCourses } = this.props;
+function ManageCoursesPage({ courses, authors, loadAuthors, loadCourses }) {
+  useEffect(() => {
     if (courses === 0) {
       loadCourses().catch((err) => {
         alert("Loading courses failed " + err);
@@ -20,16 +19,14 @@ class ManageCoursesPage extends React.Component {
         alert("Loading authors failed " + err);
       });
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <div>
-        {" "}
-        <h2>Manage Courses</h2>
-      </div>
-    );
-  }
+  return (
+    <div>
+      {" "}
+      <h2>Manage Courses</h2>
+    </div>
+  );
 }
 
 // SECTION 3 Prototypes declaration
@@ -37,7 +34,7 @@ ManageCoursesPage.propTypes = {
   authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
-  loadAuthors: PropTypes.func.isRequired
+  loadAuthors: PropTypes.func.isRequired,
 };
 
 //SECTION 4 Redux mappings: state and actions to access in component
