@@ -1,12 +1,24 @@
 // SECTION 1 Imports for container component
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loadCourses } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
+import CourseForm from "./CourseForm";
+import { newCourse } from "../../../tools/mockData";
 
 // SECTION 2 Component declaration, pre-on-load and render
-function ManageCoursesPage({ courses, authors, loadAuthors, loadCourses }) {
+function ManageCoursesPage({
+  courses,
+  authors,
+  loadAuthors,
+  loadCourses,
+  ...props
+}) {
+
+  const [course, setCourse] = useState({ ...props.course });
+  const [errors, setErrors] = useState({})
+
   useEffect(() => {
     if (courses === 0) {
       loadCourses().catch((err) => {
@@ -21,16 +33,12 @@ function ManageCoursesPage({ courses, authors, loadAuthors, loadCourses }) {
     }
   }, []);
 
-  return (
-    <div>
-      {" "}
-      <h2>Manage Courses</h2>
-    </div>
-  );
+  return <CourseForm course={course} errors={errors} authors={authors} />;
 }
 
 // SECTION 3 Prototypes declaration
 ManageCoursesPage.propTypes = {
+  course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
@@ -40,6 +48,7 @@ ManageCoursesPage.propTypes = {
 //SECTION 4 Redux mappings: state and actions to access in component
 function mapStateToProps(state) {
   return {
+    course: newCourse,
     courses: state.courses,
     authors: state.authors,
   };
