@@ -9,26 +9,26 @@ import CourseList from "./CourseList";
 class CoursesPage extends React.Component {
   componentDidMount() {
     const { courses, authors, actions } = this.props;
-    if (courses === 0) {
-      actions.loadCourses().catch((err) => {
-        alert("Loading courses failed " + err);
+
+    if (courses.length === 0) {
+      actions.loadCourses().catch((error) => {
+        alert("Loading courses failed" + error);
       });
     }
 
-    if (authors === 0) {
-      actions.loadAuthors().catch((err) => {
-        alert("Loading authors failed " + err);
+    if (authors.length === 0) {
+      actions.loadAuthors().catch((error) => {
+        alert("Loading authors failed" + error);
       });
     }
   }
 
   render() {
     return (
-      <div>
-        {" "}
+      <>
         <h2>Courses</h2>
         <CourseList courses={this.props.courses} />
-      </div>
+      </>
     );
   }
 }
