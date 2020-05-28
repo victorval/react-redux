@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 // SECTION 2 Component declaration, pre-on-load and render
 function ManageCoursesPage({
@@ -51,8 +52,9 @@ function ManageCoursesPage({
     event.preventDefault();
     setSaving(true);
     saveCourse(course).then(() => {
+      toast.success("Course saved.")
       history.push("/courses");
-    });
+    }).catch();
   }
 
   return (authors.length === 0) | (courses.length === 0) ? (
