@@ -8,7 +8,7 @@ export function loadAuthorsSuccess(authors) {
 
 export function loadAuthors() {
   return function (dispatch) {
-    dispatch(beginApiCall())
+    dispatch(beginApiCall());
     return authorApi
       .getAuthors()
       .then((authors) => {
