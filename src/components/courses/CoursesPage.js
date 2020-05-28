@@ -29,12 +29,14 @@ class CoursesPage extends React.Component {
     }
   }
 
-  handleDeleteCourse = course => {
+  handleDeleteCourse = async (course) => {
     toast.success("Course deleted");
-    this.props.actions.deleteCourse(course).catch(error => {
-      toast.error("Delete failed. " + error.message, { autoClose: false});
-    });
-  }
+    try {
+      await this.props.actions.deleteCourse(course);
+    } catch (error) {
+      toast.error("Delete failed. " + error.message, { autoClose: false });
+    }
+  };
 
   render() {
     return (
@@ -52,7 +54,10 @@ class CoursesPage extends React.Component {
             >
               Add course
             </button>
-            <CourseList onDeleteClick={this.handleDeleteCourse} courses={this.props.courses} />
+            <CourseList
+              onDeleteClick={this.handleDeleteCourse}
+              courses={this.props.courses}
+            />
           </>
         )}
       </>
@@ -80,7 +85,7 @@ function mapStateToProps(state) {
             };
           }),
     authors: state.authors,
-    loading: state.apiCallInProgress > 0
+    loading: state.apiCallInProgress > 0,
   };
 }
 
