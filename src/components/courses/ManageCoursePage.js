@@ -14,6 +14,7 @@ function ManageCoursesPage({
   loadAuthors,
   loadCourses,
   saveCourse,
+  history,
   ...props
 }) {
   const [course, setCourse] = useState({ ...props.course });
@@ -44,7 +45,9 @@ function ManageCoursesPage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course);
+    saveCourse(course).then(() => {
+      history.push('/courses');
+    });
   }
 
   return (
@@ -66,6 +69,7 @@ ManageCoursesPage.propTypes = {
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 //SECTION 4 Redux mappings: state and actions to access in component
