@@ -54,7 +54,10 @@ function ManageCoursesPage({
     saveCourse(course).then(() => {
       toast.success("Course saved.")
       history.push("/courses");
-    }).catch();
+    }).catch(error => {
+      setSaving(false);
+      setErrors({ onSave: error.message });
+    });
   }
 
   return (authors.length === 0) | (courses.length === 0) ? (
