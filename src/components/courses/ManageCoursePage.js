@@ -25,6 +25,8 @@ function ManageCoursesPage({
       loadCourses().catch((err) => {
         alert("Loading courses failed " + err);
       });
+    } else {
+      setCourse({ ...props.course })
     }
 
     if (authors.length === 0) {
@@ -32,7 +34,7 @@ function ManageCoursesPage({
         alert("Loading authors failed " + err);
       });
     }
-  }, []);
+  }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -46,7 +48,7 @@ function ManageCoursesPage({
   function handleSave(event) {
     event.preventDefault();
     saveCourse(course).then(() => {
-      history.push('/courses');
+      history.push("/courses");
     });
   }
 
@@ -69,13 +71,23 @@ ManageCoursesPage.propTypes = {
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 
+// placed a selector directly from store
+export function getCourseBySlug(courses, slug) {
+  return courses.find((course) => course.slug === slug) || null;
+}
+
 //SECTION 4 Redux mappings: state and actions to access in component
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? getCourseBySlug(state.courses, slug)
+      : newCourse;
   return {
-    course: newCourse,
+    course,
     courses: state.courses,
     authors: state.authors,
   };

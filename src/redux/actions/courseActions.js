@@ -27,7 +27,7 @@ export function loadCourses() {
 }
 
 export function saveCourse(course) {
-  return function (dispatch, getState) {
+  return function (dispatch) {// getState
     return courseApi
       .saveCourse(course)
       .then((savedCourse) => {
